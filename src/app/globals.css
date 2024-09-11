@@ -16,7 +16,9 @@
 
 body {
   --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity)) /* #111827 */;
+  body {
+    background: radial-gradient(circle, #000000 0%, #1a1a1a 100%);
+  }
 }
 
 @layer utilities {
