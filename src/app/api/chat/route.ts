@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const model = genAI.getGenerativeModel({
     model: 'gemini-1.5-flash',
     generationConfig: {
-      maxOutputTokens: 1000, 
+      maxOutputTokens: 10000, 
       temperature: 0.7,      
     },
   });
