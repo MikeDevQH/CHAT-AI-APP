@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from "react";
-import ChatHeader from "@/components/chat/chat-header";
-import ChatBody from "@/components/chat/chat-body";
-import ChatInput from "@/components/chat/chat-input";
+import ChatBody from "@/components/chat/ChatBody";
+import ChatInput from "@/components/chat/ChatInput";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -49,6 +48,15 @@ export default function Chat() {
   const openFileExplorer = () => {
     fileInputRef.current?.click();
   };
+
+    // Función para limpiar la imagen seleccionada
+    const clearImage = () => {
+      setImagePreview(null); // Limpiar la previsualización de la imagen
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""; // Limpiar el input de archivo
+      }
+    };
+  
 
   const sendMessage = async () => {
     if (!input.trim() && image) return;
@@ -123,8 +131,7 @@ export default function Chat() {
   
 
   return (
-    <div className="flex flex-col h-screen bg-gray-950 text-gray-100">
-      <ChatHeader />
+    <div className="flex flex-col h-screen pt-16">
       <ChatBody
         messages={messages}
         isBotTyping={isBotTyping}
@@ -139,6 +146,7 @@ export default function Chat() {
         openFileExplorer={openFileExplorer}
         fileInputRef={fileInputRef}
         isBotTyping={isBotTyping}
+        clearImage={clearImage} 
       />
       {error && (
         <div className="text-red-500 text-center py-2">
