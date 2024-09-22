@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
 import { useState, useEffect, useRef } from "react";
-import ChatHeader from "@/components/chat/ChatHeader";
-import ChatBody from "@/components/chat/ChatBody";
-import ChatInput from "@/components/chat/ChatInput";
+import ChatHeader from "@/components/chat/chat-header";
+import ChatBody from "@/components/chat/chat-body";
+import ChatInput from "@/components/chat/chat-input";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -14,6 +14,10 @@ export default function Chat() {
   const [error, setError] = useState<string | null>(null);
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [botMessageRetry, setBotMessageRetry] = useState<{
+    message?: string;
+    image?: string;
+  } | null>(null); // Para reintentar la respuesta de la IA
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -43,48 +47,80 @@ export default function Chat() {
   };
 
   const openFileExplorer = () => {
-    fileInputRef.current?.click(); 
+    fileInputRef.current?.click();
   };
 
   const sendMessage = async () => {
     if (!input.trim() && image) return;
     if (!input.trim() && !image) return;
-
+  
+    // Añadir el mensaje del usuario al chat
     setMessages((prevMessages) => [
       ...prevMessages,
       { user: "user", text: input, image: imagePreview || undefined },
     ]);
+  
     setInput("");
     setImage(null);
     setImagePreview(null);
     setIsBotTyping(true);
     setError(null);
-
+  
     const formData = new FormData();
     formData.append("message", input);
     if (image) formData.append("image", image);
-
+  
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         body: formData,
       });
-
+  
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-
+  
       const data = await response.json();
+  
+      // Añadir el mensaje de la IA al chat
       setMessages((prevMessages) => [
         ...prevMessages,
         { user: "bot", text: data.text },
       ]);
+      setBotMessageRetry(null); // Si la respuesta del bot es exitosa, limpiar el estado de retry
       setIsBotTyping(false);
     } catch (error: any) {
-      setError(error.message || "Error al obtener respuesta de la IA.");
+      // Si el error ocurre al enviar el mensaje del usuario
+      if (!botMessageRetry) {
+        // Eliminar el mensaje fallido del chat
+        setMessages((prevMessages) =>
+          prevMessages.filter((msg) => msg.text !== input)
+        );
+        // Restaurar el mensaje fallido en el input
+        setInput(input);
+        setError("Error al enviar el mensaje, vuelve a intentarlo.");
+      } else {
+        // Si falla la generación de la respuesta del bot, permitir reintentar
+        setBotMessageRetry({ message: input, image: imagePreview || undefined });
+        setError("Error al generar la respuesta de la IA, vuelve a intentarlo.");
+      }
       setIsBotTyping(false);
     }
   };
+  
+
+  const retryBotMessage = async () => {
+    if (!botMessageRetry) return;
+  
+    // Añadir de nuevo el mensaje del usuario
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { user: "user", text: botMessageRetry.message || "", image: botMessageRetry.image },
+    ]);
+    setBotMessageRetry(null);
+    setError(null);
+  };
+  
 
   return (
     <div className="flex flex-col h-screen bg-gray-950 text-gray-100">
@@ -101,8 +137,22 @@ export default function Chat() {
         sendMessage={sendMessage}
         imagePreview={imagePreview}
         openFileExplorer={openFileExplorer}
-        fileInputRef={fileInputRef}     />
-      {error && <div className="text-red-500 text-center py-2">{error}</div>}
+        fileInputRef={fileInputRef}
+        isBotTyping={isBotTyping}
+      />
+      {error && (
+        <div className="text-red-500 text-center py-2">
+          {error}{" "}
+          {botMessageRetry && (
+            <button
+              onClick={retryBotMessage}
+              className="text-blue-400 hover:underline"
+            >
+              Reintentar
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
