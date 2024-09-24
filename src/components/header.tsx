@@ -1,7 +1,12 @@
-export default function ChatHeader() {
-  return (
-    <header className="text-center py-4 bg-gray-900 shadow-md">
-      <h1 className="text-4xl font-bold text-blue-400">ChatAI App</h1>
-    </header>
-  );
+import ThemeToggle from "@/components/ui/ThemeToggle"; // Asegúrate de importar el ThemeToggle  
+
+export default function ChatHeader() {  
+  return (  
+    <header className="relative text-center py-4 bg-[var(--header-background)] shadow-md">  
+      <h1 className="text-4xl font-bold text-[var(--header-text)]">ChatAI App</h1>  
+      <div className="absolute top-4 right-4">  
+        <ThemeToggle />  
+      </div>  
+    </header>  
+  );  
 }

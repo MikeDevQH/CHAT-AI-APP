@@ -106,7 +106,12 @@ export default function Chat() {
         );
         // Restaurar el mensaje fallido en el input
         setInput(input);
-        setError("Error al enviar el mensaje, vuelve a intentarlo.");
+        setTimeout(() => {
+          setError("Error al enviar el mensaje, vuelve a intentarlo.");
+        }, 500)
+        setError(null)
+        
+
       } else {
         // Si falla la generación de la respuesta del bot, permitir reintentar
         setBotMessageRetry({ message: input, image: imagePreview || undefined });

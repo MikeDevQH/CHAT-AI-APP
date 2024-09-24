@@ -2,92 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+/* Variables Globales */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+   /* Variables para el tema claro */ 
+  --header-background: #f3f4f6; /* Fondo del header en modo claro */
+  --header-text: #1d4ed8; /* Texto del header en modo claro */
+  --background: #ffffff; /* Fondo de la página en modo claro */
+  --text-color: #1f2937; /* Texto principal en modo claro */
+
+  --icon-user: #3b82f6; /* Color del ícono del usuario en modo claro */
+  --message-user-background: #b3e0ff; /* Fondo del mensaje de usuario en modo claro */
+  --message-user-text: #1a1a1a; /* Texto del mensaje de usuario en modo claro */
+  --icon-bot: #1f2937; /* Color del ícono del bot en modo claro */
+  --message-bot-background: #f5f5f5; /* Fondo del mensaje del bot en modo claro */
+  --message-bot-text: #1a1a1a; /* Texto del mensaje del bot en modo claro */
+  --bot-typing: #1a1a1a; /* Texto de "bot typing" en modo claro */
+
+  --input-container-background: #f3f4f6; /* Fondo del contenedor del input en modo claro */
+  --input-background: #ffffff; /* Fondo del input en modo claro */
+  --input-text: #1f2937; /* Texto del input en modo claro */
+  --input-border: #d1d5db; /* Borde del input en estado normal en modo claro */
+  --input-focus-border: #93c5fd; /* Borde del input en foco en modo claro */
+  --input-placeholder: #6b7280; /* Placeholder en modo claro */
+  --disabled-opacity: 0.5; /* Opacidad cuando el input está deshabilitado */
+  --disabled-cursor: not-allowed; /* Cursor cuando el input está deshabilitado */
+
+  --button-background: #e5e7eb; /* Fondo del botón en modo claro */
+  --button-hover-background: #93c5fd; /* Fondo al hacer hover en modo claro */
+  --button-disabled-background: #d1d5db; /* Fondo del botón deshabilitado en modo claro */
+  --button-icon-color: #1f2937; /* Color del ícono del botón en modo claro */
+  --button-disabled-opacity: 0.5; /* Opacidad cuando el botón está deshabilitado */
+  --button-disabled-cursor: not-allowed; /* Cursor cuando el botón está deshabilitado */
+
+  --text--footer: #1a1a1a;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
-body {
-  --tw-bg-opacity: 1;
-  background-color: rgb(3 7 18 / var(--tw-bg-opacity)) /* #030712 */;
-  --tw-text-opacity: 1;
-  color: rgb(243 244 246 / var(--tw-text-opacity)) /* #f3f4f6 */;
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+[data-theme='dark'] {
+   /* Variables para el tema oscuro */  
+    --header-background: #1f2937; /* Fondo del header en modo oscuro */
+    --header-text: #60a5fa;; /* Texto del header en modo oscuro */
+    --background: #0f172a; /* Fondo de la página en modo oscuro */
+    --text-color: #e5e7eb; /* Texto principal en modo oscuro */
+  
+    --icon-user: #60a5fa; /* Color del ícono del usuario en modo oscuro */
+    --message-user-background: #1e40af; /* Fondo del mensaje de usuario en modo oscuro */
+    --message-user-text: #e5e7eb; /* Texto del mensaje de usuario en modo oscuro */
+    --icon-bot: #e5e7eb; /* Color del ícono del bot en modo oscuro */
+    --message-bot-background: #334155; /* Fondo del mensaje del bot en modo oscuro */
+    --message-bot-text: #e5e7eb; /* Texto del mensaje del bot en modo oscuro */
+    --bot-typing: #e5e7eb; /* Texto de "bot typing" en modo oscuro */
+  
+    --input-container-background: #1f2937; /* Fondo del contenedor del input en modo oscuro */
+    --input-background: #0f172a; /* Fondo del input en modo oscuro */
+    --input-text: #e5e7eb; /* Texto del input en modo oscuro */
+    --input-border: #334155; /* Borde del input en estado normal en modo oscuro */
+    --input-focus-border: #60a5fa; /* Borde del input en foco en modo oscuro */
+    --input-placeholder: #94a3b8; /* Placeholder en modo oscuro */
+    --disabled-opacity: 0.5; /* Opacidad cuando el input está deshabilitado */
+    --disabled-cursor: not-allowed; /* Cursor cuando el input está deshabilitado */
+  
+    --button-background: #374151; /* Fondo del botón en modo oscuro */
+    --button-hover-background: #4f6d8f; /* Fondo al hacer hover en modo oscuro */
+    --button-disabled-background: #4b5563; /* Fondo del botón deshabilitado en modo oscuro */
+    --button-icon-color: #e5e7eb; /* Color del ícono del botón en modo oscuro */
+    --button-disabled-opacity: 0.5; /* Opacidad cuando el botón está deshabilitado */
+    --button-disabled-cursor: not-allowed; /* Cursor cuando el botón está deshabilitado */
+  
+    --text-footer: #e5e7eb; /* Color del texto del footer en modo oscuro */
+  
   }
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}

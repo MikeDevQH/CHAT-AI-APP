@@ -21,8 +21,8 @@ export default function ChatBody({
   isBotTyping,
   messagesEndRef,
 }: ChatBodyProps) {
-  const UserIcon = () => <User className="h-8 w-8 text-blue-500" />;
-  const BotIcon = () => <Bot className="h-8 w-8 text-blue-500" />;
+  const UserIcon = () => <User className="h-8 w-8 text-[var(--icon-user)]" />;
+  const BotIcon = () => <Bot className="h-8 w-8 text-[var(--icon-bot)]" />;
 
   return (
     <div className="flex-1 p-4 overflow-hidden">
@@ -52,14 +52,14 @@ export default function ChatBody({
                 <div
                   className={`p-3 rounded-2xl shadow-md max-w-[90%] md:max-w-[80%] ${
                     message.user === "user"
-                      ? "bg-blue-800 text-white"
-                      : "bg-gray-900 text-white"
+                      ? "bg-[var(--message-user-background)] text-[var(--message-user-text)]"
+                      : "bg-[var(--message-bot-background)] text-[var(--message-bot-text)]"
                   }`}
                 >
                   {/* Para los bloques de código, aplicamos desplazamiento horizontal */}
                   {message.text.startsWith("```") ? (
                     <div className="overflow-x-auto max-w-full">
-                      <pre className="bg-gray-800 p-2 rounded-lg whitespace-pre-wrap">
+                      <pre className="p-2 rounded-lg whitespace-pre-wrap">
                         <code className="block whitespace-pre">
                           <ReactMarkdown>{message.text}</ReactMarkdown>
                         </code>
@@ -74,7 +74,7 @@ export default function ChatBody({
           </motion.div>
         ))}
         {isBotTyping && (
-          <div className="ml-2 text-gray-400 flex items-center">
+          <div className="ml-2 text-[var(--bot-typing)] flex items-center">
             <svg className="animate-spin h-5 w-5 mr-1" viewBox="0 0 24 24">
               <circle
                 className="opacity-25"
